@@ -32,9 +32,11 @@ import {
 import { IModelSelectFrontstage } from "./frontstages/IModelSelectFrontstage";
 import { SignInFrontstage } from "./frontstages/SignInFrontstage";
 import { SnapshotSelectFrontstage } from "./frontstages/SnapshotSelectFrontstage";
+import { AnimationWidgetProvider } from "../AnimationWidget";
 
 type LocalStoreName = "snapshot" | "imodel" | "project";
 const makeLocalStoreName = (name: LocalStoreName) => `DesktopViewer:${name}`;
+const uiProvider = [new AnimationWidgetProvider()];
 const fromLocalStorage = (name: LocalStoreName) =>
   window.localStorage.getItem(makeLocalStoreName(name)) ?? undefined; // replace null with undefined
 const toLocalStorage = (baseName: LocalStoreName, val?: string) => {
@@ -224,6 +226,7 @@ export const AppComponent = () => {
       onIModelAppInit={onIModelAppInitialized}
       frontstages={frontstages}
       backstageItems={backstageItems}
+      uiProviders={uiProvider} //uncomment for animation test
       viewCreatorOptions={{ viewportConfigurer: viewConfiguration }}
     />
   );
