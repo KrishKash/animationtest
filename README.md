@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Environment Variables
+## Environment Variables [OPTIONAL]
 
 Prior to running the app, you will need to add OIDC client configuration to the variables in the .env file:
 
@@ -23,6 +23,9 @@ This will load the snapshot in the Viewer by default.
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `yarn install`
+Note: To install yarn  `npm install -g yarn`
 
 ### `yarn start`
 
