@@ -3,7 +3,7 @@ import { Angle, AngleSweep, Arc3d, AuxChannel, AuxChannelData, AuxChannelDataTyp
 import { AnalysisStyle, AnalysisStyleProps, ThematicGradientColorScheme, ThematicGradientMode, ThematicGradientSettingsProps } from "@bentley/imodeljs-common";
 import { json } from "./Cantilever";
 
-type AnalysisMeshType = "Cantilever" | "Flat with waves";
+export type AnalysisMeshType = "Cantilever" | "Flat with waves";
 
 export interface AnalysisMesh {
   readonly type: AnalysisMeshType;
@@ -15,7 +15,7 @@ export default class Animation3dApi {
   public static createCantilever(): Polyface {
     //const response = await fetch("Cantilever.json");
     const polyface = IModelJson.Reader.parse(json) as Polyface;
-    console.log("polyface data from createCantilever()- " + JSON.stringify(polyface));
+    // console.log("polyface data from createCantilever()- " + JSON.stringify(polyface));
     assert(polyface instanceof Polyface);
 
     const transform = Transform.createScaleAboutPoint(new Point3d(), 30);
@@ -151,12 +151,12 @@ export default class Animation3dApi {
     auxChannels.push(new AuxChannel(linearSlopeDataVector, AuxChannelDataType.Scalar, "Linear Slope", "Linear: Time"));
 
     polyface.data.auxData = new PolyfaceAuxData(auxChannels, polyface.data.pointIndex);
-    console.log("polyface data from createFlatMeshWithWaves() " + JSON.stringify(polyface.data.auxData));
+    // console.log("polyface data from createFlatMeshWithWaves() " + JSON.stringify(polyface.data.auxData));
     return polyface;
   }
 
-  public static async createMesh(type: AnalysisMeshType, displacementScale = 1): Promise<AnalysisMesh> {
-    const polyface = "Flat with waves" === type ? Animation3dApi.createFlatMeshWithWaves() : await Animation3dApi.createCantilever();
+  public static createMesh(type: AnalysisMeshType, displacementScale = 1): AnalysisMesh {
+    const polyface = "Flat with waves" === type ? Animation3dApi.createFlatMeshWithWaves() : Animation3dApi.createCantilever();
     const styles = new Map<string, AnalysisStyle | undefined>();
     const mesh = { type, polyface, styles };
     Animation3dApi.populateAnalysisStyles(mesh, displacementScale);
